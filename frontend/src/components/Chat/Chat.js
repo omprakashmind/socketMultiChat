@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React from 'react'
 import {Form,Button,Container,Row,Col,Jumbotron} from 'react-bootstrap'
 import queryString from 'query-string'
 import axios from 'axios'
@@ -28,6 +28,18 @@ class Chat extends React.Component{
           
         })
         .catch((err)=>console.log(err))
+
+
+        const value=localStorage.getItem('username');
+        console.log(value)
+    }
+
+    logoutUser=()=>{
+        localStorage.clear()
+        this.setState({
+            username:''
+        })
+        window.location.href='/'
     }
 
 
@@ -39,13 +51,23 @@ class Chat extends React.Component{
                     <div>  <Button className="btn" color="primary" size="lg"> <p>{item[1][1]}</p>   </Button> <br></br>     </div>   
                  )
         })
-        
+
+
+
+        if(localStorage.getItem('username')===null){
+            return(
+                <div>ACCESS DENIED</div>
+            )
+
+        }
+        else{
 
            return(
 
             <div>
                <Jumbotron>
                   <p>WELCOME TO THE CHAT APPLICATION {this.state.name}</p>
+                  <Button onClick={this.logoutUser}>LOGOUT</Button>
 
                </Jumbotron>
                 
@@ -68,8 +90,10 @@ class Chat extends React.Component{
             </div>
 
            )
+        
+        }
 
-     }
+           }
 
 }
 

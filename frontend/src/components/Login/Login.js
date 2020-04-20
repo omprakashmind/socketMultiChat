@@ -22,11 +22,20 @@ const Login=()=>{
     if(username!=null && password!=null)
     {
         axios({method:'post',url:'http://localhost:5000/db/login',data:qs.stringify({username:username,password:password}),headers:{'content-type':'application/x-www-form-urlencoded;charset=utf-8'}})  
-        .then((res)=>console.log(res))
-        .catch((err)=>console.log(err))
-        
-    }
+        .then((res)=>{ 
+               if(res['data']['status']===200){  
+                   localStorage.setItem('username',username)
+                   console.log(res)
 
+                   window.location.href='/chat'
+                }
+            else {
+                      localStorage.clear()
+            }
+                 
+        })
+        .catch((err)=>console.log(err))
+    }
    }
 
 

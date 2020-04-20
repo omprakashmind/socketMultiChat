@@ -38,7 +38,7 @@ const loginUser=({username,password})=>{
    if(userExist===undefined)
        return {status:404}
    else
-       return {staus:200};
+       return {status:200};
 
 }
 
