@@ -22,7 +22,8 @@ const addUser=({name,username,useremail,password})=>{
     users.push(user);
 
     let arr=new Object
-    arr[name]=username
+    arr[0]=username
+    arr[1]=name
     userMapping.push(arr);
     
     

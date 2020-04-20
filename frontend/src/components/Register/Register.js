@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Button,Form,FormGroup,Label,Input,FormText} from 'reactstrap';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 
 
