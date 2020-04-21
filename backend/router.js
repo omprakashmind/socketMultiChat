@@ -27,8 +27,7 @@ router.post('/login',async(req,res)=>{
     const username=req.body.username
     const password=req.body.password
 
-   const response=loginUser({username,password})
-   console.log(response)
+    const response=loginUser({username,password})
     
     res.send(response)
 })
@@ -57,7 +56,7 @@ router.get('/getAll',async(req,res)=>{
 router.post('/roomExist',async(req,res)=>{
     const sender=req.body.sender
     const receiver=req.body.receiver
-    console.log(sender+" "+receiver)
+    
     const response=checkRoom({sender,receiver})
 
     res.send(response)

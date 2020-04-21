@@ -8,16 +8,16 @@ import axios from 'axios'
 
 const Register =()=>{
   const [name,setName]=React.useState('')
-  const [userName,setUserName]=React.useState('')
-  const [userEmail,setUserEmail]=React.useState('')
-  const [userPassword,setUserPassword]=React.useState('')
+  const [username,setUserName]=React.useState('')
+  const [useremail,setUserEmail]=React.useState('')
+  const [password,setUserPassword]=React.useState('')
 
  
 
     const setValues=(event)=>{
         event.preventDefault()
         
-        axios.post('http://localhost:5000/db/register',{name,userName,userEmail,userPassword})
+        axios.post('http://localhost:5000/db/register',{name,username,useremail,password})
         .then(res=>{
             console.log(res)
         })

@@ -6,6 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Chat.css'
 import Message from '../Input/Input'
 
+
+
+
+
+
+
 class Chat extends React.Component{
     constructor(props)
     {
@@ -14,13 +20,17 @@ class Chat extends React.Component{
             usernamesender:'',
             userreceiver:'',
             name:'',
-            userMapping:[]
+            userMapping:[],
+            
         }
     }
     
-   
+  
+
 
     componentDidMount=()=>{
+      
+
         axios.get('http://localhost:5000/db/getAll')  
         .then((res)=>{
             this.setState({
@@ -56,10 +66,13 @@ class Chat extends React.Component{
 
 
         let showAllUser=()=>this.state.userMapping && Object.entries(this.state.userMapping).map((item,index)=>{
-            if(item[1][0]!=this.state.usernamesender)
+            if(this.state.usernamesender!=(item[1][0]))
+            {
             return(
+               
                 <div key={item.id}><Button onClick={(event)=>this.setReceiver(event,index)} className="btn" color="primary" size="lg"> <p>{item[1][1]}</p> </Button> <br></br>     </div>   
             )
+            }
         })
 
 
@@ -87,7 +100,7 @@ class Chat extends React.Component{
                     </Col>
                     <Col>
                         
-                    {this.state.receiver!=''?  <Message sender={this.state.userreceiver} receiver={this.state.usernamesender} ></Message> : ''}    
+                        {this.state.receiver!=''?  <Message sender={this.state.usernamesender} receiver={this.state.userreceiver} ></Message> : ''}    
                         
                     </Col>
                 </Row>

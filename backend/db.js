@@ -4,29 +4,24 @@ const userMapping=[]
 
 
 const addUser=({name,username,useremail,password})=>{
-    name=name;
-    username=username;
-    email=useremail;
-    password=password;
     
-
-    const existingUser=users.find((user)=>user.email==email);
+    const existingUser=users.find((user)=>user.useremail==useremail);
     const existUserName=users.find((user)=>user.username==username)
 
     if(existingUser) return {error:'EMAIL ID IS ALREADY REGISTERED'}
 
     if(existUserName) return {error:'PLEASE CHOOSE ANOTHER USERNAME'}
 
-    const user={name,username,email,password}
+    const user={name,username,useremail,password}
     
     users.push(user);
 
     let arr=new Object
     arr[0]=username
     arr[1]=name
+
     userMapping.push(arr);
-    
-    
+       
     return {status:200}
 }
 
@@ -47,6 +42,7 @@ const receiveMessage=({sender,receiver,message})=>{
     
     let index=rooms.findIndex((room)=>room.firstName===sender && room.secondName===receiver)
     let index1=rooms.findIndex((room)=>room.firstName===receiver && room.secondName===sender)
+    let messageChat=[]
     
     if(index===-1 && index1===-1){
         let firstName=sender
@@ -56,6 +52,7 @@ const receiveMessage=({sender,receiver,message})=>{
         messageRoom.push(room)
         let chat={firstName,secondName,messageRoom}
         rooms.push(chat)
+        messageChat.push(messageRoom)
     }
     else{
         const index3=index > -1 ? index : index1
@@ -63,8 +60,9 @@ const receiveMessage=({sender,receiver,message})=>{
         let room={firstName,message}
 
         rooms[index3]['messageRoom'].push(room)
+        messageChat=rooms[index3]['messageRoom']
     }
-    return {rooms}
+    return {messageChat}
 }
 
 const checkRoom=({sender,receiver})=>{

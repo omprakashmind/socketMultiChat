@@ -22,15 +22,10 @@ const io=socketio(server)
 
 
 
-
-
-
-
-
 io.on('connection',(socket)=>{
    console.log('We have a new connection')
 
-
+  
   
   
 
