@@ -32,7 +32,7 @@ const addUser=({name,username,useremail,password})=>{
 
 const loginUser=({username,password})=>{
    
-   console.log(username+" "+password)
+   
    const userExist=users.find((user)=>user.username===username && user.password===password)
 
    if(userExist===undefined)
@@ -56,7 +56,6 @@ const receiveMessage=({sender,receiver,message})=>{
         messageRoom.push(room)
         let chat={firstName,secondName,messageRoom}
         rooms.push(chat)
-        console.log('12')
     }
     else{
         const index3=index > -1 ? index : index1
@@ -65,14 +64,21 @@ const receiveMessage=({sender,receiver,message})=>{
 
         rooms[index3]['messageRoom'].push(room)
     }
-    
-
     return {rooms}
 }
 
+const checkRoom=({sender,receiver})=>{
+    let index=rooms.findIndex((room)=>room.firstName===sender && room.secondName===receiver)
+    let index1=rooms.findIndex((room)=>room.firstName===receiver && room.secondName===sender)
+    let val;
+    if(index==-1)
+      return {val:index1}
+    return {val:index}    
+} 
 
 
 
 
-module.exports={addUser,loginUser,receiveMessage,userMapping}
+
+module.exports={addUser,loginUser,receiveMessage,userMapping,checkRoom}
 

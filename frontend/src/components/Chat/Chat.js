@@ -4,16 +4,17 @@ import queryString from 'query-string'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Chat.css'
+import Message from '../Input/Input'
 
 class Chat extends React.Component{
     constructor(props)
     {
         super(props)
         this.state={
-            username:'',
+            usernamesender:'',
+            userreceiver:'',
             name:'',
-            userMapping:{},
-            err:''
+            userMapping:[]
         }
     }
     
@@ -23,16 +24,14 @@ class Chat extends React.Component{
         axios.get('http://localhost:5000/db/getAll')  
         .then((res)=>{
             this.setState({
-                userMapping:res['data']
-            })
-          
+                userMapping:res['data'],
+                usernamesender:localStorage.getItem('username')
+            })         
         })
         .catch((err)=>console.log(err))
-
-
-        const value=localStorage.getItem('username');
-        console.log(value)
     }
+
+
 
     logoutUser=()=>{
         localStorage.clear()
@@ -43,62 +42,63 @@ class Chat extends React.Component{
     }
 
 
+    setReceiver=(event,index)=>{
+        event.preventDefault() 
+        
+        const val=this.state.userMapping[index][0]
+          this.setState({
+            userreceiver:val
+          })   
+    }
+
+
      render(){
 
 
         let showAllUser=()=>this.state.userMapping && Object.entries(this.state.userMapping).map((item,index)=>{
-                 return(
-                    <div>  <Button className="btn" color="primary" size="lg"> <p>{item[1][1]}</p>   </Button> <br></br>     </div>   
-                 )
+            if(item[1][0]!=this.state.usernamesender)
+            return(
+                <div key={item.id}><Button onClick={(event)=>this.setReceiver(event,index)} className="btn" color="primary" size="lg"> <p>{item[1][1]}</p> </Button> <br></br>     </div>   
+            )
         })
-
 
 
         if(localStorage.getItem('username')===null){
             return(
                 <div>ACCESS DENIED</div>
             )
-
         }
         else{
 
            return(
 
-            <div>
-               <Jumbotron>
+        <div>
+            
+                
+            <Jumbotron>
                   <p>WELCOME TO THE CHAT APPLICATION {this.state.name}</p>
                   <Button onClick={this.logoutUser}>LOGOUT</Button>
-
-               </Jumbotron>
+            </Jumbotron>
                 
-             <Container>
-                 <Row>
-                     <Col>
-                         {showAllUser()}
-                     </Col>
-                     <Col>
+            <Container>
+                <Row>
+                    <Col>
+                        {showAllUser()}
+                    </Col>
+                    <Col>
                         
+                    {this.state.receiver!=''?  <Message sender={this.state.userreceiver} receiver={this.state.usernamesender} ></Message> : ''}    
+                        
+                    </Col>
+                </Row>
 
-
-                     </Col>
-
-                 </Row>
-
-
-             </Container>
-            
-            </div>
+            </Container>
+        </div>
 
            )
-        
         }
-
-           }
-
+    }
 }
 
 
-
-
 export default Chat;
-

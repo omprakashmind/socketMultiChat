@@ -24,6 +24,11 @@ const Register =()=>{
         .catch(err=>console.log(err))
     }
 
+    const loginPage=(event)=>{
+        event.preventDefault()
+        window.location.href="/"
+    }
+
      return(
          <Form onSubmit={setValues}>
              <FormText color="muted">
@@ -47,6 +52,10 @@ const Register =()=>{
              </FormGroup>
 
              <Button>SUBMIT</Button>
+
+             <Link>
+               <Button onClick={loginPage}>ALREADY REGISTERED</Button>
+             </Link>
 
          </Form>
      )

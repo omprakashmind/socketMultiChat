@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router();
 
 
-const {userMapping,addUser,loginUser,receiveMessage}=require('./db')
+const {userMapping,addUser,loginUser,receiveMessage,checkRoom}=require('./db')
 
 
 
@@ -51,6 +51,16 @@ router.post('/Message',async(req,res)=>{
 
 router.get('/getAll',async(req,res)=>{
     res.send(userMapping)
+})
+
+
+router.post('/roomExist',async(req,res)=>{
+    const sender=req.body.sender
+    const receiver=req.body.receiver
+    console.log(sender+" "+receiver)
+    const response=checkRoom({sender,receiver})
+
+    res.send(response)
 })
 
 
